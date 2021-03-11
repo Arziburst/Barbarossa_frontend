@@ -8,5 +8,10 @@ import CatsSchema from '../schemas/cats.graphql';
 import { Cats } from '../types';
 
 export const useCatsQuery = () => {
-    return useQuery<Cats>(CatsSchema);
+    return useQuery<Cats>(CatsSchema, {
+        onCompleted: () => {
+            console.log('Zag-zag');
+
+        }
+    });
 };
