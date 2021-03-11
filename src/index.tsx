@@ -17,11 +17,11 @@ import {
     store as reduxStore,
     persistor as reduxPersistor,
     history as routerHistory,
-    registerServiceWorker,
+    // registerServiceWorker,
 } from './init';
 
 // App
-import { App } from './view';
+import { App } from './view/App';
 
 // Elements
 import { Spinner } from './view/elements';
@@ -59,6 +59,6 @@ const Root = () => {
 
 render(<Root />, document.getElementById('app'));
 
-if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
-    registerServiceWorker();
-}
+// if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
+//     registerServiceWorker();
+// }

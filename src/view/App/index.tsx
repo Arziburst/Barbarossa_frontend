@@ -1,17 +1,18 @@
 // Core
 import React, { FC, useEffect, useCallback } from 'react';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider as StyledThemeProvider } from 'styled-components';
+import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 
 // Containers
 import { TopBar } from '../containers/TopBar';
-import { Routes } from './Routes';
+import { Routes } from '../routes';
 
 // Hooks
 import { useLocalStorage } from '../../tools/hooks';
 import { useTogglersRedux } from '../../bus/client';
 
 // Assets and Styles
-import { GlobalStyles, defaultTheme } from '../../assets';
+import { GlobalStyles, defaultTheme, muiDefaultTheme } from '../../assets';
 import { AppContainer } from './styles';
 
 export const App: FC = () => {
@@ -30,12 +31,14 @@ export const App: FC = () => {
     }, []);
 
     return (
-        <ThemeProvider theme = { isDefaultTheme ? defaultTheme : defaultTheme }>
-            <GlobalStyles />
-            <AppContainer>
-                <TopBar />
-                <Routes />
-            </AppContainer>
-        </ThemeProvider>
+        <StyledThemeProvider theme = { isDefaultTheme ? defaultTheme : defaultTheme }>
+            <MuiThemeProvider theme = { muiDefaultTheme }>
+                <GlobalStyles />
+                <AppContainer>
+                    <TopBar />
+                    <Routes />
+                </AppContainer>
+            </MuiThemeProvider>
+        </StyledThemeProvider>
     );
 };

@@ -1,0 +1,6 @@
+fragment lessonFields on Lesson {
+    _id
+    lessonNumber
+    title
+    description
+}

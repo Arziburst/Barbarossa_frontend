@@ -12,6 +12,12 @@ export interface CatInput {
   age: number;
 }
 
+export interface LessonCreateInput {
+  lessonNumber: number;
+  title?: string | null;
+  description?: string | null;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

@@ -1,0 +1,7 @@
+#import "./lessonFields.graphql"
+
+mutation CreateLesson($input: LessonCreateInput!) {
+  createLesson(input: $input) {
+    ...lessonFields
+  }
+}
