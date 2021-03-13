@@ -2,10 +2,10 @@
 import React, { FC } from 'react';
 
 // Apollo
-import { useLessonsQuery, useCreateLessonMutation } from '../../../bus/Lessons';
+import { useTestsQuery, useCreateTestMutation } from '../../../bus/Tests';
 
 // Components
-import { ErrorBoundary, Modal } from '../../components';
+import { ErrorBoundary } from '../../components';
 
 // Elements
 import { Spinner } from '../../elements';
@@ -16,28 +16,28 @@ import { useForm } from '../../../tools/hooks';
 // Styles
 import { Container } from './styles';
 
-const Lessons: FC = () => {
-    const { data, loading } = useLessonsQuery();
-    const [ createLesson ] = useCreateLessonMutation();
+const Tests: FC = () => {
+    const { data, loading } = useTestsQuery();
+    const [ createTest ] = useCreateTestMutation();
     const [ form, setForm ] = useForm({
-        lessonNumber: '',
-        description:  '',
-        title:        '',
+        // lessonNumber: '',
+        // description:  '',
+        // title:        '',
     });
 
     if (loading) {
         return <Spinner />;
     }
 
-    const onSubmitHandler = () => void createLesson({ variables: { input: {
-        ...form,
-        lessonNumber: parseInt(form.lessonNumber, 10),
-    }}});
+    // const onSubmitHandler = () => void createTest({ variables: { input: {
+    //     ...form,
+    //     lessonNumber: parseInt(form.lessonNumber, 10),
+    // }}});
 
     return (
         <Container>
-            <Modal />
-            <div style = {{
+            tests
+            {/* <div style = {{
                 display:       'flex',
                 flexDirection: 'column',
             }}>
@@ -64,31 +64,28 @@ const Lessons: FC = () => {
             </div>
             <section>
                 {
-                    data?.lessons.map(({ _id, lessonNumber, title, description, tests }) => {
+                    data?.tests.map(({ _id, lessonNumber, title, description, tests }) => {
                         return (
                             <div
                                 key = { _id }
                                 style = {{
                                     margin:          10,
                                     padding:         5,
-                                    backgroundColor: 'gray',
+                                    backgroundColor: 'yellow',
                                     color:           '#fff',
                                 }}>
                                 <p>lessonNumber: {lessonNumber}</p>
-                                <p>title: {title}</p>
-                                <p>description: {description}</p>
-                                <p>tests: {tests.length}</p>
                             </div>
                         );
                     })
                 }
-            </section>
+            </section> */}
         </Container>
     );
 };
 
 export default () => (
     <ErrorBoundary>
-        <Lessons />
+        <Tests />
     </ErrorBoundary>
 );

@@ -4,20 +4,17 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: lessonFields
+// GraphQL query operation: Tests
 // ====================================================
 
-export interface lessonFields_tests {
+export interface Tests_tests {
   __typename: "Test";
   _id: string;
   testNumber: number;
-}
-
-export interface lessonFields {
-  __typename: "Lesson";
-  _id: string;
-  lessonNumber: number;
   title: string | null;
   description: string | null;
-  tests: lessonFields_tests[];
+}
+
+export interface Tests {
+  tests: Tests_tests[];
 }

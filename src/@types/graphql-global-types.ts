@@ -12,6 +12,13 @@ export interface CatInput {
   age: number;
 }
 
+export interface CreateTestInput {
+  testNumber: number;
+  title?: string | null;
+  description?: string | null;
+  lessonId: string;
+}
+
 export interface LessonCreateInput {
   lessonNumber: number;
   title?: string | null;

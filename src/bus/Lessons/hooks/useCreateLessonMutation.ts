@@ -11,16 +11,20 @@ import { Lessons, CreateLesson, CreateLessonVariables } from '../types';
 export const useCreateLessonMutation = () => {
     return useMutation<CreateLesson, CreateLessonVariables>(CreateLessonSchema, {
         update(cache, { data }) {
-            const { lessons } = cache.readQuery<Lessons>({
-                query: LessonsSchema,
-            })!;
+            if (!data) {
+                throw new Error('Test create failed');
+            }
 
-            cache.writeQuery({
-                query: LessonsSchema,
-                data:  {
-                    lessons: [ ...lessons, data!.createLesson ],
-                },
-            });
+            try {
+                const { lessons } = cache.readQuery<Lessons>({ query: LessonsSchema })!;
+
+                cache.writeQuery({
+                    query: LessonsSchema,
+                    data:  {
+                        lessons: [ ...lessons, data.createLesson ],
+                    },
+                });
+            } catch (error) { } // eslint-disable-line no-empty
         },
     });
 };

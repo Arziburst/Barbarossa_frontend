@@ -1,0 +1,13 @@
+#import "../../Lessons/lessonFields.graphql"
+#import "./testFields.graphql"
+
+mutation TestCreate ($input: CreateTestInput!) {
+	createTest(input: $input) {
+    updatedLesson {
+      ...lessonFields
+    }
+    createdTest {
+      ...testFields
+    }
+  }
+}

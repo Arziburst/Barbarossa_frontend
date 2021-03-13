@@ -3,9 +3,5 @@
 query Lessons {
   lessons {
     ...lessonFields
-    tests {
-      _id
-      testNumber
-    }
   }
 }

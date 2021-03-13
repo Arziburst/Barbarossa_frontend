@@ -4,7 +4,7 @@ import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 
 // Containers
-import { TopBar } from '../containers/TopBar';
+import { AppBarContainer } from '../containers/AppBar';
 import { Routes } from '../routes';
 
 // Hooks
@@ -35,7 +35,7 @@ export const App: FC = () => {
             <MuiThemeProvider theme = { muiDefaultTheme }>
                 <GlobalStyles />
                 <AppContainer>
-                    <TopBar />
+                    <AppBarContainer />
                     <Routes />
                 </AppContainer>
             </MuiThemeProvider>
