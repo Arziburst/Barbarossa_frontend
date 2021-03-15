@@ -17,12 +17,6 @@ export const Private: FC = () => {
                 <Lessons />
             </Route>
 
-            {/* <Route
-                exact
-                path = { paths.ROOT }>
-                <Main />
-            </Route> */}
-
             <Redirect to = { paths.LESSONS } />
         </Switch>
     );

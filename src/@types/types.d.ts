@@ -1,7 +1,5 @@
-export type OnMutationHanlerType = (
-    payload: {
-        onSuccess?: Function
-        onError?: Function
-    }
-) => void
+export type OnMutationOptions = {
+    onSuccess?: Function
+    onError?: Function
+}
 

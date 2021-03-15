@@ -1,8 +1,0 @@
-mutation CreateCat($input:CatInput!) {
-  createCat(input: $input) {
-    _id
-    age
-    name
-  }
-    
-}

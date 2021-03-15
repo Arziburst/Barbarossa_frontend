@@ -7,8 +7,9 @@ import LessonsSchema from '../schemas/lessons.graphql';
 
 // Types
 import { Lessons, CreateLesson, CreateLessonVariables } from '../types';
+import { OnMutationOptions } from '../../../@types/types';
 
-export const useCreateLessonMutation = () => {
+export const useCreateLessonMutation = ({ onSuccess }: OnMutationOptions) => {
     return useMutation<CreateLesson, CreateLessonVariables>(CreateLessonSchema, {
         update(cache, { data }) {
             if (!data) {
@@ -25,6 +26,8 @@ export const useCreateLessonMutation = () => {
                     },
                 });
             } catch (error) { } // eslint-disable-line no-empty
+
+            onSuccess && onSuccess();
         },
     });
 };

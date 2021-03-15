@@ -1,37 +1,29 @@
 // Core
-import React, { useState, FC } from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import React, { FC } from 'react';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 
 // Components
 import { Transition } from './Transition';
 
 // Types
-import { OnMutationHanlerType } from '../../../@types/types';
-
 type PropTypes = {
     title: string
-    onMutationSubmit: OnMutationHanlerType
+    onSubmit: Function
+    modalState: [ boolean, React.Dispatch<React.SetStateAction<boolean>>]
 }
 
 export const Modal: FC<PropTypes> = ({
     children,
-    onMutationSubmit,
+    onSubmit,
     title,
+    modalState,
 }) => {
-    const [ open, setOpen ] = useState(false);
-
+    const [ isOpen, setOpen ] = modalState;
     const handleOpen = () => void setOpen(true);
     const handleClose = () => void setOpen(false);
 
-    const onSubmitHandler = () => onMutationSubmit
-        ? void onMutationSubmit({
-            onSuccess: handleClose,
-        })
+    const onSubmitHandler = () => onSubmit
+        ? void onSubmit()
         : void setOpen(false);
 
     return (
@@ -47,14 +39,9 @@ export const Modal: FC<PropTypes> = ({
                 TransitionComponent = { Transition }
                 aria-describedby = 'alert-dialog-slide-description'
                 aria-labelledby = 'alert-dialog-slide-title'
-                open = { open }
+                open = { isOpen }
                 onClose = { handleClose }>
-                <DialogTitle id = 'alert-dialog-slide-title'>Create lesson form.</DialogTitle>
-                <DialogContent>
-                    <DialogContentText id = 'alert-dialog-slide-description'>
-                        {title}
-                    </DialogContentText>
-                </DialogContent>
+                <DialogTitle id = 'alert-dialog-slide-title'>{title}</DialogTitle>
                 <DialogContent>
                     {children}
                 </DialogContent>
@@ -62,12 +49,12 @@ export const Modal: FC<PropTypes> = ({
                     <Button
                         color = 'primary'
                         onClick = { handleClose }>
-                        Disagree
+                        Cancel
                     </Button>
                     <Button
                         color = 'primary'
                         onClick = { onSubmitHandler }>
-                        Agree
+                        Submit
                     </Button>
                 </DialogActions>
             </Dialog>
