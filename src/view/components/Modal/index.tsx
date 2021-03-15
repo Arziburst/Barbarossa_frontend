@@ -7,7 +7,10 @@ import { Transition } from './Transition';
 
 // Types
 type PropTypes = {
-    title: string
+    options: {
+        title: string
+        buttonText: string
+    },
     onSubmit: Function
     modalState: [ boolean, React.Dispatch<React.SetStateAction<boolean>>]
 }
@@ -15,8 +18,8 @@ type PropTypes = {
 export const Modal: FC<PropTypes> = ({
     children,
     onSubmit,
-    title,
     modalState,
+    options,
 }) => {
     const [ isOpen, setOpen ] = modalState;
     const handleOpen = () => void setOpen(true);
@@ -32,7 +35,7 @@ export const Modal: FC<PropTypes> = ({
                 color = 'primary'
                 variant = 'outlined'
                 onClick = { handleOpen }>
-                Create lesson
+                {options.buttonText}
             </Button>
             <Dialog
                 keepMounted
@@ -41,7 +44,7 @@ export const Modal: FC<PropTypes> = ({
                 aria-labelledby = 'alert-dialog-slide-title'
                 open = { isOpen }
                 onClose = { handleClose }>
-                <DialogTitle id = 'alert-dialog-slide-title'>{title}</DialogTitle>
+                <DialogTitle id = 'alert-dialog-slide-title'>{options.title}</DialogTitle>
                 <DialogContent>
                     {children}
                 </DialogContent>

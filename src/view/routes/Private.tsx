@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 // Pages
-import { Lessons } from '../pages';
+import { Lessons, Tests } from '../pages';
 
 // Paths
 import * as paths from './paths';
@@ -15,6 +15,12 @@ export const Private: FC = () => {
                 exact
                 path = { paths.LESSONS }>
                 <Lessons />
+            </Route>
+
+            <Route
+                exact
+                path = { paths.TESTS }>
+                <Tests />
             </Route>
 
             <Redirect to = { paths.LESSONS } />

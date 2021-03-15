@@ -1,0 +1,7 @@
+#import "./testFields.graphql"
+
+query TestsOfLesson($input: TestsOfLessonInput!) {
+  testsOfLesson(input: $input) {
+    ...testFields
+  }
+}

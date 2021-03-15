@@ -1,6 +1,7 @@
 // Core
 import React, { FC, useState } from 'react';
 import { TextField } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 
 // Apollo
 import { useLessonsQuery, useCreateLessonMutation } from '../../../bus/Lessons';
@@ -17,7 +18,11 @@ import { useForm } from '../../../tools/hooks';
 // Styles
 import { Container } from './styles';
 
+// Path
+import { getPath_TESTS } from '../../routes/paths';
+
 const Lessons: FC = () => {
+    const { push } = useHistory();
     const [ isOpen, setOpen ] = useState(false);
     const [ form, setForm,, resetForm ] = useForm({
         lessonNumber: '',
@@ -48,7 +53,10 @@ const Lessons: FC = () => {
         <Container>
             <Modal
                 modalState = { [ isOpen, setOpen ] }
-                title = 'Create lesson form'
+                options = {{
+                    title:      'Create lesson form',
+                    buttonText: 'Create lesson',
+                }}
                 onSubmit = { onSubmit }>
                 <section style = {{
                     display:       'flex',
@@ -75,7 +83,6 @@ const Lessons: FC = () => {
                     />
                 </section>
             </Modal>
-
             <section>
                 {
                     data?.lessons.map(({ _id, lessonNumber, title, description, tests }) => {
@@ -87,7 +94,8 @@ const Lessons: FC = () => {
                                     padding:         5,
                                     backgroundColor: 'gray',
                                     color:           '#fff',
-                                }}>
+                                }}
+                                onClick = { () => void push(getPath_TESTS(_id)) }>
                                 <p>lessonNumber: {lessonNumber}</p>
                                 <p>title: {title}</p>
                                 <p>description: {description}</p>

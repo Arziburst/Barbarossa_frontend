@@ -1,4 +1,4 @@
-#import "../../Lessons/lessonFields.graphql"
+#import "../../Lessons/schemas/lessonFields.graphql"
 #import "./testFields.graphql"
 
 mutation TestCreate ($input: CreateTestInput!) {

@@ -2,15 +2,20 @@
 import { useMutation } from '@apollo/client';
 
 // GraphQL
+import TestsOfLessonSchema from '../schemas/testsOfLesson.graphql';
 import CreateTestSchema from '../schemas/createTest.graphql';
-import TestsSchema from '../schemas/tests.graphql';
 import LessonsSchema from '../../Lessons/schemas/lessons.graphql';
 
 // Types
 import { Lessons } from '../../Lessons/types';
-import { Tests, TestCreate, TestCreateVariables } from '../types';
+import { TestsOfLesson, TestsOfLessonVariables, TestCreate, TestCreateVariables } from '../types';
+import { OnMutationOptions } from '../../../@types/types';
 
-export const useCreateTestMutation = () => {
+interface Options extends OnMutationOptions {
+    lessonId: string
+}
+
+export const useCreateTestMutation = ({ onSuccess, lessonId }: Options) => {
     return useMutation<TestCreate, TestCreateVariables>(CreateTestSchema, {
         update(cache, { data }) {
             if (!data) {
@@ -18,12 +23,16 @@ export const useCreateTestMutation = () => {
             }
 
             try {
-                const { tests } = cache.readQuery<Tests>({ query: TestsSchema })!;
+                const localQueryOptions = {
+                    query:     TestsOfLessonSchema,
+                    variables: { input: { lessonId }},
+                };
+                const { testsOfLesson } = cache.readQuery<TestsOfLesson, TestsOfLessonVariables>(localQueryOptions)!;
 
-                cache.writeQuery({
-                    query: TestsSchema,
-                    data:  {
-                        tests: [ ...tests, data.createTest.createdTest ],
+                cache.writeQuery<TestsOfLesson, TestsOfLessonVariables>({
+                    ...localQueryOptions,
+                    data: {
+                        testsOfLesson: [ ...testsOfLesson, data.createTest.createdTest ],
                     },
                 });
             } catch (error) { } // eslint-disable-line no-empty
@@ -44,6 +53,8 @@ export const useCreateTestMutation = () => {
                     },
                 });
             } catch (error) { } // eslint-disable-line no-empty
+
+            onSuccess && onSuccess();
         },
     });
 };
