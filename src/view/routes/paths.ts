@@ -6,5 +6,5 @@ export const REGISTER = '/register';
 export const ROOT = '/';
 export const LESSONS = '/lessons';
 
-export const TESTS = `${LESSONS}/:lessonId/tests`;
-export const getPath_TESTS = (lessonId: string) => `${LESSONS}/${lessonId}/tests`;
+export const TESTS = '/lesson/:lessonId/tests';
+export const getPath_TESTS = (lessonId: string) => `/lesson/${lessonId}/tests`;
