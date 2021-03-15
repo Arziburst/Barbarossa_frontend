@@ -1,0 +1,7 @@
+#import "./lessonFields.graphql"
+
+mutation UpdateLesson($input: UpdateLessonInput!) {
+    updateLesson(input: $input) {
+        ...lessonFields
+    }
+}

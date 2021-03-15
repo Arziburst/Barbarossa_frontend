@@ -2,7 +2,7 @@
 import React, { FC } from 'react';
 
 // Apollo
-import { useLessonsQuery, useCreateLessonMutation } from '../../../bus/Lessons';
+import { useLessonsQuery/* , useCreateLessonMutation */ } from '../../../bus/Lessons';
 
 // Components
 import { ErrorBoundary, Modal } from '../../components';
@@ -15,10 +15,11 @@ import { useForm } from '../../../tools/hooks';
 
 // Styles
 import { Container } from './styles';
+// import { OnMutationHanlerType } from '../../../@types/types';
 
 const Lessons: FC = () => {
     const { data, loading } = useLessonsQuery();
-    const [ createLesson ] = useCreateLessonMutation();
+    // const [ createLesson ] = useCreateLessonMutation();
     const [ form, setForm ] = useForm({
         lessonNumber: '',
         description:  '',
@@ -29,39 +30,44 @@ const Lessons: FC = () => {
         return <Spinner />;
     }
 
-    const onSubmitHandler = () => void createLesson({ variables: { input: {
-        ...form,
-        lessonNumber: parseInt(form.lessonNumber, 10),
-    }}});
+    // const onSubmitHandler: OnMutationHanlerType = (payload) => void createLesson({
+    //     variables: { input: {
+    //         ...form,
+    //         lessonNumber: parseInt(form.lessonNumber, 10),
+    //     }},
+    // });
 
     return (
         <Container>
-            <Modal />
-            <div style = {{
-                display:       'flex',
-                flexDirection: 'column',
-            }}>
-                <input
-                    name = 'lessonNumber'
-                    placeholder = 'lessonNumber'
-                    type = 'number'
-                    value = { form.lessonNumber }
-                    onChange = { (event) => setForm(event, true) }
-                />
-                <input
-                    name = 'title'
-                    placeholder = 'title'
-                    value = { form.title }
-                    onChange = { setForm }
-                />
-                <input
-                    name = 'description'
-                    placeholder = 'description'
-                    value = { form.description }
-                    onChange = { setForm }
-                />
-                <button onClick = { onSubmitHandler }>Create lesson</button>
-            </div>
+            <Modal
+                title = 'Создание урока,'
+                onMutationSubmit = { () => void 0 }>
+                <div style = {{
+                    display:       'flex',
+                    flexDirection: 'column',
+                }}>
+                    <input
+                        name = 'lessonNumber'
+                        placeholder = 'lessonNumber'
+                        type = 'number'
+                        value = { form.lessonNumber }
+                        onChange = { (event) => setForm(event, true) }
+                    />
+                    <input
+                        name = 'title'
+                        placeholder = 'title'
+                        value = { form.title }
+                        onChange = { setForm }
+                    />
+                    <input
+                        name = 'description'
+                        placeholder = 'description'
+                        value = { form.description }
+                        onChange = { setForm }
+                    />
+                </div>
+            </Modal>
+
             <section>
                 {
                     data?.lessons.map(({ _id, lessonNumber, title, description, tests }) => {

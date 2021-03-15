@@ -1,3 +1,4 @@
+// Core
 import React, { useState, FC } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -5,34 +6,40 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Slide from '@material-ui/core/Slide';
-import { TransitionProps } from '@material-ui/core/transitions';
 
-const Transition = React.forwardRef(function Transition(
-    props: TransitionProps & { children?: React.ReactElement<any, any> },
-    ref: React.Ref<unknown>,
-) {
-    return (
-        <Slide
-            direction = 'up'
-            ref = { ref }
-            { ...props }
-        />
-    );
-});
+// Components
+import { Transition } from './Transition';
 
-export const Modal: FC = () => {
+// Types
+import { OnMutationHanlerType } from '../../../@types/types';
+
+type PropTypes = {
+    title: string
+    onMutationSubmit: OnMutationHanlerType
+}
+
+export const Modal: FC<PropTypes> = ({
+    children,
+    onMutationSubmit,
+    title,
+}) => {
     const [ open, setOpen ] = useState(false);
 
-    const handleClickOpen = () => void setOpen(true);
+    const handleOpen = () => void setOpen(true);
     const handleClose = () => void setOpen(false);
+
+    const onSubmitHandler = () => onMutationSubmit
+        ? void onMutationSubmit({
+            onSuccess: handleClose,
+        })
+        : void setOpen(false);
 
     return (
         <section>
             <Button
                 color = 'primary'
                 variant = 'outlined'
-                onClick = { handleClickOpen }>
+                onClick = { handleOpen }>
                 Create lesson
             </Button>
             <Dialog
@@ -42,12 +49,14 @@ export const Modal: FC = () => {
                 aria-labelledby = 'alert-dialog-slide-title'
                 open = { open }
                 onClose = { handleClose }>
-                <DialogTitle id = 'alert-dialog-slide-title'>{'Use Google\'s location service?'}</DialogTitle>
+                <DialogTitle id = 'alert-dialog-slide-title'>Create lesson form.</DialogTitle>
                 <DialogContent>
                     <DialogContentText id = 'alert-dialog-slide-description'>
-                        Let Google help apps determine location. This means sending anonymous location data to
-                        Google, even when no apps are running.
+                        {title}
                     </DialogContentText>
+                </DialogContent>
+                <DialogContent>
+                    {children}
                 </DialogContent>
                 <DialogActions>
                     <Button
@@ -57,7 +66,7 @@ export const Modal: FC = () => {
                     </Button>
                     <Button
                         color = 'primary'
-                        onClick = { handleClose }>
+                        onClick = { onSubmitHandler }>
                         Agree
                     </Button>
                 </DialogActions>

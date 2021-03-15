@@ -1,0 +1,7 @@
+#import "./testFields.graphql"
+
+mutation UpdateTest($input: UpdateTestInput!) {
+    updateTest(input: $input) {
+        ...testFields
+    }
+}

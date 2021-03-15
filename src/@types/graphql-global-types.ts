@@ -25,6 +25,22 @@ export interface LessonCreateInput {
   description?: string | null;
 }
 
+export interface UpdateLessonInput {
+  _id: string;
+  lessonNumber?: number | null;
+  title?: string | null;
+  description?: string | null;
+  tests?: string[] | null;
+}
+
+export interface UpdateTestInput {
+  _id: string;
+  testNumber?: number | null;
+  title?: string | null;
+  description?: string | null;
+  lessons?: string | null;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================
