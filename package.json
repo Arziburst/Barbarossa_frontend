@@ -11,7 +11,7 @@
         "gen": "npm run apollo:push && npm run apollo:schema && npm run apollo:gen",
         "apollo:push": "apollo service:push",
         "apollo:schema": "apollo service:download graphqlSchema.json",
-        "apollo:gen": "apollo codegen:generate --localSchemaFile=graphqlSchema.json --target=typescript --globalTypesFile=src/@types/graphql-global-types.ts \"./src/bus/**/types\""
+        "apollo:gen": "apollo codegen:generate --localSchemaFile=graphqlSchema.json --target=typescript --globalTypesFile=src/@types/graphql-global-types.ts \"../types\""
     },
     "dependencies": {
         "@apollo/client": "^3.3.11",
