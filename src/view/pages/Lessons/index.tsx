@@ -1,13 +1,13 @@
 // Core
 import React, { FC, useState } from 'react';
 import { TextField } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
 
 // Apollo
 import { useLessonsQuery, useCreateLessonMutation } from '../../../bus/Lessons';
 
 // Components
 import { ErrorBoundary, Modal } from '../../components';
+import { LearningEntityCard } from '../../components';
 
 // Elements
 import { Spinner } from '../../elements';
@@ -18,11 +18,8 @@ import { useForm } from '../../../tools/hooks';
 // Styles
 import { Container } from './styles';
 
-// Path
-import { getPath_TESTS } from '../../routes/paths';
 
 const Lessons: FC = () => {
-    const { push } = useHistory();
     const [ isOpen, setOpen ] = useState(false);
     const [ form, setForm,, resetForm ] = useForm({
         lessonNumber: '',
@@ -63,21 +60,24 @@ const Lessons: FC = () => {
                     flexDirection: 'column',
                 }}>
                     <TextField
+                        className = 'mb-3'
                         name = 'lessonNumber'
-                        placeholder = 'lessonNumber'
+                        placeholder = 'Lesson number'
                         type = 'number'
                         value = { form.lessonNumber }
                         onChange = { (event) => setForm(event, true) }
                     />
                     <TextField
+                        className = 'mb-3'
                         name = 'title'
-                        placeholder = 'title'
+                        placeholder = 'Title'
                         value = { form.title }
                         onChange = { setForm }
                     />
                     <TextField
+                        className = 'mb-3'
                         name = 'description'
-                        placeholder = 'description'
+                        placeholder = 'Description'
                         value = { form.description }
                         onChange = { setForm }
                     />
@@ -85,22 +85,12 @@ const Lessons: FC = () => {
             </Modal>
             <section>
                 {
-                    data?.lessons.map(({ _id, lessonNumber, title, description, tests }) => {
+                    data?.lessons.map((lesson) => {
                         return (
-                            <div
-                                key = { _id }
-                                style = {{
-                                    margin:          10,
-                                    padding:         5,
-                                    backgroundColor: 'gray',
-                                    color:           '#fff',
-                                }}
-                                onClick = { () => void push(getPath_TESTS(_id)) }>
-                                <p>lessonNumber: {lessonNumber}</p>
-                                <p>title: {title}</p>
-                                <p>description: {description}</p>
-                                <p>tests: {tests.length}</p>
-                            </div>
+                            <LearningEntityCard
+                                entityData = { lesson }
+                                key = { lesson._id }
+                            />
                         );
                     })
                 }
