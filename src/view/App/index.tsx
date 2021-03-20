@@ -13,7 +13,7 @@ import { useTogglersRedux } from '../../bus/client';
 
 // Assets and Styles
 import { GlobalStyles, defaultTheme, muiDefaultTheme } from '../../assets';
-import { AppContainer } from './styles';
+import { AppContainer, RoutesContainer } from './styles';
 
 export const App: FC = () => {
     const { setTogglerAction } = useTogglersRedux();
@@ -36,7 +36,9 @@ export const App: FC = () => {
                 <GlobalStyles />
                 <AppContainer>
                     <AppBarContainer />
-                    <Routes />
+                    <RoutesContainer>
+                        <Routes />
+                    </RoutesContainer>
                 </AppContainer>
             </MuiThemeProvider>
         </StyledThemeProvider>

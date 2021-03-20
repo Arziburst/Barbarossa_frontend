@@ -1,22 +1,20 @@
 // Core
 import React, { FC, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { Button, TextField } from '@material-ui/core';
+import { TextField, Typography, Link } from '@material-ui/core';
 
 // Apollo
 import { useTestsOfLessonQuery, useCreateTestMutation } from '../../../bus/Tests';
 
 // Components
 import { ErrorBoundary, Modal } from '../../components';
+import { LearningEntityCard } from '../../components';
 
 // Elements
 import { Spinner } from '../../elements';
 
 // Hooks
 import { useForm } from '../../../tools/hooks';
-
-// Styles
-import { Container } from './styles';
 
 const Tests: FC = () => {
     const { goBack } = useHistory();
@@ -50,13 +48,17 @@ const Tests: FC = () => {
     }}});
 
     return (
-        <Container>
-            <Button
-                color = 'primary'
-                variant = 'outlined'
-                onClick = { () => goBack() }>
-                Back
-            </Button>
+        <div>
+            <Link
+                className = 'd-block mb-3'
+                component = 'button'
+                variant = 'body1'
+                onClick = { (event: React.SyntheticEvent) => {
+                    event.preventDefault();
+                    goBack();
+                } }>
+                &#8592; Go back
+            </Link>
             <Modal
                 modalState = { [ isOpen, setOpen ] }
                 options = {{
@@ -69,21 +71,24 @@ const Tests: FC = () => {
                     flexDirection: 'column',
                 }}>
                     <TextField
+                        className = 'mb-3'
                         name = 'testNumber'
-                        placeholder = 'testNumber'
+                        placeholder = 'Test number'
                         type = 'number'
                         value = { form.testNumber }
                         onChange = { (event) => setForm(event, true) }
                     />
                     <TextField
+                        className = 'mb-3'
                         name = 'title'
-                        placeholder = 'title'
+                        placeholder = 'Title'
                         value = { form.title }
                         onChange = { setForm }
                     />
                     <TextField
+                        className = 'mb-3'
                         name = 'description'
-                        placeholder = 'description'
+                        placeholder = 'Description'
                         value = { form.description }
                         onChange = { setForm }
                     />
@@ -91,25 +96,18 @@ const Tests: FC = () => {
             </Modal>
             <section>
                 {
-                    data?.testsOfLesson.map(({ _id, title, description, testNumber }) => {
-                        return (
-                            <div
-                                key = { _id }
-                                style = {{
-                                    margin:          10,
-                                    padding:         5,
-                                    backgroundColor: 'gray',
-                                    color:           '#fff',
-                                }}>
-                                <p>testNumber: {testNumber}</p>
-                                <p>title: {title}</p>
-                                <p>description: {description}</p>
-                            </div>
-                        );
-                    })
+                    data?.testsOfLesson?.length
+                        ? data?.testsOfLesson.map((test) => {
+                            return (
+                                <LearningEntityCard entityData = { test } />
+                            );
+                        })
+                        : (
+                            <Typography variant = 'body1'>There are no tests yet</Typography>
+                        )
                 }
             </section>
-        </Container>
+        </div>
     );
 };
 

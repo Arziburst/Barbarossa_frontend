@@ -8,7 +8,7 @@ export const EntitiesScrollList = styled.section<{ heightDiff: number }>`
 `;
 
 export const EntityContainer = styled.section`
-    position: relative;
+    //position: relative;
     width: 100%;
 `;
 
@@ -17,7 +17,6 @@ export const EntityHeader = styled.header`
     box-sizing: border-box;
     grid-template-columns: 30% 40% 30%;
     padding: 5px;
-    box-sizing: border-box;
     
     h2 {
         font-size: 20px;
@@ -46,7 +45,7 @@ export const EntityInfo = styled.section`
     width: 100%;
     color: #fff;
     box-sizing: border-box;
-    padding: 5px 5px 0px;
+    padding: 5px 5px 0;
 
     div {
         display: flex;
@@ -88,7 +87,7 @@ export const EntityInputs = styled.main`
 
         h2 {
             font-size: 20px;
-            padding: 5px 0px;
+            padding: 5px 0;
             font-family: sans-serif;
         }
     }

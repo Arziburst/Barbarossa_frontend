@@ -1,6 +1,7 @@
 // Core
 import React, { FC } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
+import { Button, IconButton, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 // Components
 import { Transition } from './Transition';
@@ -13,7 +14,19 @@ type PropTypes = {
     },
     onSubmit: Function
     modalState: [ boolean, React.Dispatch<React.SetStateAction<boolean>>]
+    // width: number | string,
 }
+
+// Styles
+import { CreateLessonButton } from './styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(() => createStyles({
+    iconLarge: {
+        width:  '2.8rem',
+        height: '2.8rem',
+    },
+}));
 
 export const Modal: FC<PropTypes> = ({
     children,
@@ -21,6 +34,8 @@ export const Modal: FC<PropTypes> = ({
     modalState,
     options,
 }) => {
+    const classes = useStyles();
+
     const [ isOpen, setOpen ] = modalState;
     const handleOpen = () => void setOpen(true);
     const handleClose = () => void setOpen(false);
@@ -31,13 +46,23 @@ export const Modal: FC<PropTypes> = ({
 
     return (
         <section>
-            <Button
-                color = 'primary'
-                variant = 'outlined'
-                onClick = { handleOpen }>
-                {options.buttonText}
-            </Button>
+            <CreateLessonButton>
+                <IconButton
+                    color = 'primary'
+                    onClick = { handleOpen }>
+                    <AddCircleOutlineIcon className = { classes.iconLarge } />
+                </IconButton>
+                {/*<Button*/}
+                {/*    color = 'primary'*/}
+                {/*    startIcon = { <AddIcon /> }*/}
+                {/*    variant = 'contained'*/}
+                {/*    // variant = 'outlined'*/}
+                {/*    onClick = { handleOpen }>*/}
+                {/*    /!*{options.buttonText}*!/*/}
+                {/*</Button>*/}
+            </CreateLessonButton>
             <Dialog
+                fullWidth
                 keepMounted
                 TransitionComponent = { Transition }
                 aria-describedby = 'alert-dialog-slide-description'

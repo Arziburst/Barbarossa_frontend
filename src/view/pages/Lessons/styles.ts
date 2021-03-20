@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { EntityContainer, EntityHeader } from '../styles';
 
 export const Container = styled(EntityContainer)`
-    background-color: ${({ theme }) => theme.second.containerBg};
+    //background-color: ${({ theme }) => theme.second.containerBg};
 `;
 
 export const Header = styled(EntityHeader)`
