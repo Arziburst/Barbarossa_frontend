@@ -1,4 +1,3 @@
-// Instruments
 export const defaultTheme = {
     name:   'defaultTheme',
     button: {

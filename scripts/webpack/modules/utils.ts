@@ -6,22 +6,20 @@ import {
     HotModuleReplacementPlugin,
 } from 'webpack';
 import WebpackBar from 'webpackbar';
-import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import { GenerateSW } from 'workbox-webpack-plugin';
+import { GenerateSW  } from 'workbox-webpack-plugin';
 import WebpackPwaManifest from 'webpack-pwa-manifest';
 import dotenv from 'dotenv';
-import { resolve } from 'path';
+import { resolve, extname } from 'path';
+import fs from 'fs';
+import ttf2woff2 from 'ttf2woff2';
+import WebpackShellPluginNext from 'webpack-shell-plugin-next';
 
 // Constants
-import { SOURCE_DIRECTORY } from '../constants';
+import { BUILD_ASSETS_DIRECTORY, SOURCE_DIRECTORY } from '../constants';
 
 export const connectBuildProgressIndicator = (): Configuration => ({
-    plugins: [ new WebpackBar() ],
-});
-
-export const connectFriendlyErrors = (): Configuration => ({
-    plugins: [ new FriendlyErrorsWebpackPlugin() ],
+    plugins: [ new WebpackBar({ basic: true }) ],
 });
 
 export const connectHMR = (): Configuration => ({
@@ -38,17 +36,27 @@ export const connectBundleAnalyzer = (): Configuration => ({
     ],
 });
 
-export const defineEnvVariables = (): Configuration => ({
-    plugins: [
-        new DefinePlugin({
-            'process.env': JSON.stringify(
-                process.env.NODE_ENV === 'development'
-                    ? dotenv.config({ path: '.env' }).parsed
-                    : dotenv.config({ path: '.env.production' }).parsed,
-            ),
-        }),
-    ],
-});
+export const defineEnvVariables = (): Configuration => {
+    const envFileFinder = (path: string): string => {
+        return JSON.stringify(dotenv.config({ path }).parsed) ?? envFileFinder('.env.example');
+    };
+
+    const environmentHandler = () => {
+        switch (process?.env?.NODE_ENV) {
+            case 'development': return envFileFinder('.env.development');
+            case 'production': return envFileFinder('.env.production');
+            default: return envFileFinder('.env.example');
+        }
+    };
+
+    return {
+        plugins: [
+            new DefinePlugin({
+                'process.env': environmentHandler(),
+            }),
+        ],
+    };
+};
 
 export const provideGlobals = (): Configuration => ({
     plugins: [
@@ -90,6 +98,34 @@ export const generateManifest = (): Configuration => {
     });
 
     return {
+        // @ts-ignore
         plugins: [ manifest ],
+    };
+};
+
+export const webpackShellProd = (): Configuration => {
+    const convertFonts = () => {
+        fs.stat(BUILD_ASSETS_DIRECTORY, (error) => {
+            if (!error) {
+                const files = fs.readdirSync(BUILD_ASSETS_DIRECTORY);
+
+                files.forEach((file) => {
+                    if (extname(file) === '.ttf') {
+                        const fullFilename = `${BUILD_ASSETS_DIRECTORY}/${file}`;
+                        const buffer = fs.readFileSync(fullFilename);
+
+                        fs.writeFileSync(fullFilename, ttf2woff2(buffer));
+                    }
+                });
+            }
+        });
+    };
+
+    return {
+        plugins: [
+            new WebpackShellPluginNext({
+                onAfterDone: () => convertFonts(),
+            }),
+        ],
     };
 };

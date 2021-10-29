@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { CreateTestInput } from "./../../../@types/graphql-global-types";
+import { CreateTestInput } from "./../../../init/@types/graphql-global-types";
 
 // ====================================================
 // GraphQL mutation operation: TestCreate

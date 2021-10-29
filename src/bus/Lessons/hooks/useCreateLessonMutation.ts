@@ -7,7 +7,7 @@ import LessonsSchema from '../schemas/lessons.graphql';
 
 // Types
 import { Lessons, CreateLesson, CreateLessonVariables } from '../types';
-import { OnMutationOptions } from '../../../@types/types';
+import { OnMutationOptions } from '../../../init/@types/types';
 
 export const useCreateLessonMutation = ({ onSuccess }: OnMutationOptions) => {
     return useMutation<CreateLesson, CreateLessonVariables>(CreateLessonSchema, {

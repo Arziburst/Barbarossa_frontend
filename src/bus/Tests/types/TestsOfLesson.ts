@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { TestsOfLessonInput } from "./../../../@types/graphql-global-types";
+import { TestsOfLessonInput } from "./../../../init/@types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: TestsOfLesson

@@ -9,9 +9,6 @@
 
 # Files
 *.log
-*.env
-.env.development
-.env.production
 
 # == VIM ==
 
@@ -63,13 +60,6 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
-
-
-# == VSCode ==
-
-# Main
-.vscode/*
-
 
 # == macOS ==
 

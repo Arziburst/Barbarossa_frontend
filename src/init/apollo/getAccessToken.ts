@@ -1,5 +1,5 @@
 // Utils
-import { ValidationError } from '../../tools/helpers';
+import { ValidationError } from '../../tools/utils';
 
 // Instruments
 import { setAccessToken } from '../tokenStore';
@@ -45,7 +45,7 @@ export const getAccessToken = async ({
         }
 
         if (typeof catchSideEffect === 'function') {
-            catchSideEffect(statusCode);
+            catchSideEffect(statusCode as number);
         }
 
         return false;

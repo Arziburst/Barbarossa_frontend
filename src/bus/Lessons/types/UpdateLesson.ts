@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { UpdateLessonInput } from "./../../../@types/graphql-global-types";
+import { UpdateLessonInput } from "./../../../init/@types/graphql-global-types";
 
 // ====================================================
 // GraphQL mutation operation: UpdateLesson

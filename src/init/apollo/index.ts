@@ -19,10 +19,8 @@ import { cache } from './cache';
 //     debug:   process.env.NODE_ENV === 'development',
 // });
 
-export const getApolloClient = async () => {
+export const getApolloClient = () => {
     // await apolloPersistor.restore();
-    await console.log(); // FIXME remove this line, if getApolloClient stay sync
-
     return new ApolloClient({
         link: ApolloLink.from([
             errorLink,

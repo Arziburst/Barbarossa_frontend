@@ -3,7 +3,7 @@ root: true
 parser: '@typescript-eslint/parser'
 
 parserOptions:
-    ecmaVersion: 2018
+    ecmaVersion: 2021
     sourceType: module
     ecmaFeatures:
         impliedStrict: true
@@ -44,26 +44,6 @@ settings:
 rules:
     # hooks
     react-hooks/rules-of-hooks: 2
-
-    # Jest
-    jest/consistent-test-it:
-        - 2
-        - fn: test
-    jest/lowercase-name: 2
-    jest/no-disabled-tests: 2
-    jest/no-focused-tests: 2
-    jest/no-identical-title: 2
-    jest/no-large-snapshots:
-        - 2
-        - maxSize: 10
-    jest/no-test-prefixes: 2
-    jest/no-jest-import: 2
-    jest/prefer-to-have-length: 2
-    jest/prefer-to-be-null: 2
-    jest/prefer-to-be-undefined: 2
-    jest/valid-describe: 2
-    jest/valid-expect: 2
-    jest/valid-expect-in-promise: 2
 
     # React core
     react/no-access-state-in-setstate: 2

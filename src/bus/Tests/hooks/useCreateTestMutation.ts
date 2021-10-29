@@ -9,7 +9,7 @@ import LessonsSchema from '../../Lessons/schemas/lessons.graphql';
 // Types
 import { Lessons } from '../../Lessons/types';
 import { TestsOfLesson, TestsOfLessonVariables, TestCreate, TestCreateVariables } from '../types';
-import { OnMutationOptions } from '../../../@types/types';
+import { OnMutationOptions } from '../../../init/@types/types';
 
 interface Options extends OnMutationOptions {
     lessonId: string
